@@ -14,7 +14,6 @@ Vagrant.configure("2") do |config|
   # boxes at https://atlas.hashicorp.com/search.
   #config.vm.box = "base"
   config.vm.box = "centos/7"
-  #config.vm.box_url = "/home/lnabais/Work/Vagrant/centos7-base.box"
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
   config.vm.provider :virtualbox do |v|
@@ -24,13 +23,13 @@ Vagrant.configure("2") do |config|
   config.vm.define "docker", primary: true do |docker|
     docker.vm.hostname = "docker"
     docker.vm.network "private_network", ip: "192.168.47.3"
-    #swarm1.vm.network "forwarded_port", guest: 8000, host: 8008
+    #docker.vm.network "forwarded_port", guest: 8000, host: 8008
   end
 
-  #config.vm.provision "ansible" do |ansible|
-  #  ansible.playbook = "provisioning/playbook.yml"
-  #  ansible.inventory_path = "provisioning/inventory"
-  #end
+ # config.vm.provision "ansible" do |ansible|
+ #   ansible.playbook = "provisioning/playbook.yml"
+ #   ansible.inventory_path = "provisioning/inventory"
+ # end
 
 
   # Disable automatic box update checking. If you disable this, then
