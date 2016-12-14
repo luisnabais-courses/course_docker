@@ -1,10 +1,34 @@
-version: '2'
+on: '2'
 services:
-  web:
-    build: .
-    ports:
-     - "8001:80"
-  database:
-    image: "mariadb:1.10.19"
+  db:
+    image: "mariadb:10.1.19"
     volumes:
      - fm-mariadb:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: findmore
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: fm_wp_user
+      MYSQL_PASSWORD: fm_wp_pwd
+  wordpress:
+    depends_on:
+     - db
+    image: "wordpress:4.7"
+    #ports:
+    # - "8000:80"
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: fm_wp_user
+      WORDPRESS_DB_PASSWORD: fm_wp_pwd
+  lb:
+    image: dockercloud/haproxy
+    links:
+      - wordpress
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 80:80
+    restart: always
+volumes:
+  fm-mariadb:
