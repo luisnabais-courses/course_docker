@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
   # boxes at https://atlas.hashicorp.com/search.
   #config.vm.box = "base"
   config.vm.box = "centos/7"
-  config.vm.synced_folder ".", "/vagrant", disabled: true
+  #config.vm.synced_folder ".", "/vagrant", disabled: true
 
   config.vm.provider :virtualbox do |v|
     v.name = "fm_docker_course"
@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "docker", primary: true do |docker|
     docker.vm.hostname = "docker"
     docker.vm.network "private_network", ip: "192.168.47.3"
-    #docker.vm.network "forwarded_port", guest: 8000, host: 8008
+    docker.vm.network "forwarded_port", guest: 8000, host: 8008
   end
 
  # config.vm.provision "ansible" do |ansible|

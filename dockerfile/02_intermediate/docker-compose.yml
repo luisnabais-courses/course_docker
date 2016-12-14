@@ -1,0 +1,10 @@
+version: '2'
+services:
+  web:
+    build: .
+    ports:
+     - "8001:80"
+  database:
+    image: "mariadb:1.10.19"
+    volumes:
+     - fm-mariadb:/var/lib/mysql
