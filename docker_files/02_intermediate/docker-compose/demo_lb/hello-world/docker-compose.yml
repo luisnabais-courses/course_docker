@@ -1,0 +1,18 @@
+version: "3"
+  
+services:
+  hello:
+    image: 'tutum/hello-world'
+    #restart: always
+    ports:
+      - '80'
+    labels:
+      - "traefik.web.port=80"
+      - "traefik.web.frontend.rule=Host:luisnabais.localhost"
+      - "traefik.web.frontend.entryPoints=http"
+
+
+networks:
+  default:
+    external:
+      name: proxy
